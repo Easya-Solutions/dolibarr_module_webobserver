@@ -18,9 +18,9 @@
 #
 
 # Module label 'ModuleWebObserverName'
-ModuleWebObserverName = WebObserver
+ModuleWebObserverName = Web Observer
 # Module description 'ModuleWebObserverDesc'
-ModuleWebObserverDesc = WebObserver description
+ModuleWebObserverDesc = Connecteur pour le module WebHost
 
 #
 # Admin page
@@ -28,10 +28,7 @@ ModuleWebObserverDesc = WebObserver description
 WebObserverSetup = WebObserver setup
 Settings = Settings
 WebObserverSetupPage = WebObserver setup page
-WEBOBSERVER_MYPARAM1 = My param 1
-WEBOBSERVER_MYPARAM1Tooltip = My param 1 tooltip
-WEBOBSERVER_MYPARAM2=My param 2
-WEBOBSERVER_MYPARAM2Tooltip=My param 2 tooltip
+
 
 
 #
@@ -41,13 +38,3 @@ About = About
 WebObserverAbout = About WebObserver
 WebObserverAboutPage = WebObserver about page
 
-#
-# Sample page
-#
-MyPageName = My page name
-
-#
-# Sample widget
-#
-MyWidget = My widget
-MyWidgetDescription = My widget description

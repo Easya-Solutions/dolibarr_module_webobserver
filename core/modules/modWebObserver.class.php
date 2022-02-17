@@ -264,20 +264,20 @@ class modWebObserver extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
-		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of WebObserver'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->read)
-		$r++;
-		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create/Update objects of WebObserver'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->write)
-		$r++;
-		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of WebObserver'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->delete)
+//		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+//		$this->rights[$r][1] = 'Read objects of WebObserver'; // Permission label
+//		$this->rights[$r][4] = 'myobject';
+//		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->read)
+//		$r++;
+//		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+//		$this->rights[$r][1] = 'Create/Update objects of WebObserver'; // Permission label
+//		$this->rights[$r][4] = 'myobject';
+//		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->write)
+//		$r++;
+//		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+//		$this->rights[$r][1] = 'Delete objects of WebObserver'; // Permission label
+//		$this->rights[$r][4] = 'myobject';
+//		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->webobserver->myobject->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -286,21 +286,21 @@ class modWebObserver extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new menus
 		/* BEGIN MODULEBUILDER TOPMENU */
-		$this->menu[$r++] = array(
-			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'top', // This is a Top menu entry
-			'titre'=>'ModuleWebObserverName',
-			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-			'mainmenu'=>'webobserver',
-			'leftmenu'=>'',
-			'url'=>'/webobserver/webobserverindex.php',
-			'langs'=>'webobserver@webobserver', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000 + $r,
-			'enabled'=>'$conf->webobserver->enabled', // Define condition to show or hide menu entry. Use '$conf->webobserver->enabled' if entry must be visible if module is enabled.
-			'perms'=>'1', // Use 'perms'=>'$user->rights->webobserver->myobject->read' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
-		);
+//		$this->menu[$r++] = array(
+//			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//			'type'=>'top', // This is a Top menu entry
+//			'titre'=>'ModuleWebObserverName',
+//			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+//			'mainmenu'=>'webobserver',
+//			'leftmenu'=>'',
+//			'url'=>'/webobserver/webobserverindex.php',
+//			'langs'=>'webobserver@webobserver', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//			'position'=>1000 + $r,
+//			'enabled'=>'$conf->webobserver->enabled', // Define condition to show or hide menu entry. Use '$conf->webobserver->enabled' if entry must be visible if module is enabled.
+//			'perms'=>'1', // Use 'perms'=>'$user->rights->webobserver->myobject->read' if you want your menu with a permission rules
+//			'target'=>'',
+//			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
+//		);
 		/* END MODULEBUILDER TOPMENU */
 		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
 		$this->menu[$r++]=array(
