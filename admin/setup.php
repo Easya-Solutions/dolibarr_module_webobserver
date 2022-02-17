@@ -76,18 +76,14 @@ $modulepart = GETPOST('modulepart', 'aZ09');	// Used by actions_setmoduleoptions
 $value = GETPOST('value', 'alpha');
 $label = GETPOST('label', 'alpha');
 $scandir = GETPOST('scan_dir', 'alpha');
-$type = 'myobject';
 
-$arrayofparameters = array(
-	'WEBOBSERVER_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
-	'WEBOBSERVER_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
-	//'WEBOBSERVER_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
-	//'WEBOBSERVER_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
-	//'WEBOBSERVER_MYPARAM5'=>array('type'=>'yesno', 'enabled'=>1),
-	//'WEBOBSERVER_MYPARAM5'=>array('type'=>'thirdparty_type', 'enabled'=>1),
-	//'WEBOBSERVER_MYPARAM6'=>array('type'=>'securekey', 'enabled'=>1),
-	//'WEBOBSERVER_MYPARAM7'=>array('type'=>'product', 'enabled'=>1),
-);
+
+if(file_exists(DOL_DOCUMENT_ROOT.'/core/class/html.formsetup.class.php')){
+	require_once DOL_DOCUMENT_ROOT.'/core/class/html.formsetup.class.php';
+}
+else{
+	require_once __DIR__ . '/../retrocompatibility/core/class/html.formsetup.class.php';
+}
 
 $error = 0;
 $setupnotempty = 0;
@@ -95,50 +91,48 @@ $setupnotempty = 0;
 // Set this to 1 to use the factory to manage constants. Warning, the generated module will be compatible with version v15+ only
 $useFormSetup = 0;
 // Convert arrayofparameter into a formSetup object
-if ((float) DOL_VERSION >= 15) {
-	require_once DOL_DOCUMENT_ROOT.'/core/class/html.formsetup.class.php';
-	$formSetup = new FormSetup($db);
 
-	// you can use the param convertor
-	$formSetup->addItemsFromParamsArray($arrayofparameters);
+	$formSetup = new FormSetup($db);
 
 	// or use the new system see exemple as follow (or use both because you can ;-) )
 
-	/*
-	// Hôte
-	$item = $formSetup->newItem('NO_PARAM_JUST_TEXT');
-	$item->fieldOverride = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'];
-	$item->cssClass = 'minwidth500';
+	// Setup conf webhost token
+	$formSetup->newItem('WEBOBSERVER_TOKEN')->setAsSecureKey();
 
-	// Setup conf WEBOBSERVER_MYPARAM1 as a simple string input
-	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM1');
-
-	// Setup conf WEBOBSERVER_MYPARAM1 as a simple textarea input but we replace the text of field title
-	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM2');
-	$item->nameText = $item->getNameText().' more html text ';
-
-	// Setup conf WEBOBSERVER_MYPARAM3
-	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM3');
-	$item->setAsThirdpartyType();
-
-	// Setup conf WEBOBSERVER_MYPARAM4 : exemple of quick define write style
-	$formSetup->newItem('WEBOBSERVER_MYPARAM4')->setAsYesNo();
-
-	// Setup conf WEBOBSERVER_MYPARAM5
-	$formSetup->newItem('WEBOBSERVER_MYPARAM5')->setAsEmailTemplate('thirdparty');
-
-	// Setup conf WEBOBSERVER_MYPARAM6
-	$formSetup->newItem('WEBOBSERVER_MYPARAM6')->setAsSecureKey()->enabled = 0; // disabled
-
-	// Setup conf WEBOBSERVER_MYPARAM7
-	$formSetup->newItem('WEBOBSERVER_MYPARAM7')->setAsProduct();
-	*/
-
-	$setupnotempty = count($formSetup->items);
-}
+	$formSetup->newItem('WEBOBSERVER_WEBHOST_URL');
 
 
-$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
+//	// Hôte
+//	$item = $formSetup->newItem('NO_PARAM_JUST_TEXT');
+//	$item->fieldOverride = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'];
+//	$item->cssClass = 'minwidth500';
+//
+//	// Setup conf WEBOBSERVER_MYPARAM1 as a simple string input
+//	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM1');
+//
+//	// Setup conf WEBOBSERVER_MYPARAM1 as a simple textarea input but we replace the text of field title
+//	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM2');
+//	$item->nameText = $item->getNameText().' more html text ';
+//
+//	// Setup conf WEBOBSERVER_MYPARAM3
+//	$item = $formSetup->newItem('WEBOBSERVER_MYPARAM3');
+//	$item->setAsThirdpartyType();
+//
+//	// Setup conf WEBOBSERVER_MYPARAM4 : exemple of quick define write style
+//	$formSetup->newItem('WEBOBSERVER_MYPARAM4')->setAsYesNo();
+//
+//	// Setup conf WEBOBSERVER_MYPARAM5
+//	$formSetup->newItem('WEBOBSERVER_MYPARAM5')->setAsEmailTemplate('thirdparty');
+//
+//	// Setup conf WEBOBSERVER_MYPARAM6
+//	$formSetup->newItem('WEBOBSERVER_MYPARAM6')->setAsSecureKey()->enabled = 0; // disabled
+//
+//	// Setup conf WEBOBSERVER_MYPARAM7
+//	$formSetup->newItem('WEBOBSERVER_MYPARAM7')->setAsProduct();
+
+
+$setupnotempty = count($formSetup->items);
+
 
 
 /*
@@ -147,6 +141,10 @@ $dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
 
 include DOL_DOCUMENT_ROOT.'/core/actions_setmoduleoptions.inc.php';
 
+if (intval(DOL_VERSION) < 15 && $action == 'update' && !empty($formSetup) && is_object($formSetup) && !empty($user->admin)) {
+	$formSetup->saveConfFromPost();
+	return;
+}
 
 /*
  * View
@@ -173,17 +171,11 @@ echo '<span class="opacitymedium">'.$langs->trans("WebObserverSetupPage").'</spa
 
 
 if ($action == 'edit') {
-	if ((float) DOL_VERSION >= 15) {
-		print $formSetup->generateOutput(true);
-	}
+	print $formSetup->generateOutput(true);
 } else {
-	if ((float) DOL_VERSION >= 15) {
-		if (!empty($formSetup->items)) {
-			print $formSetup->generateOutput();
-		}
-	}
-
 	if ($setupnotempty) {
+		print $formSetup->generateOutput();
+
 		print '<div class="tabsAction">';
 		print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?action=edit&token='.newToken().'">'.$langs->trans("Modify").'</a>';
 		print '</div>';

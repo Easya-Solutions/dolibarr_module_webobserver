@@ -29,7 +29,10 @@ WebObserverSetup = WebObserver setup
 Settings = Settings
 WebObserverSetupPage = WebObserver setup page
 
-
+WEBOBSERVER_TOKEN = Token API
+WEBOBSERVER_TOKENTooltip = Token utilisé pour authentifier les echanges avec le module de monitoring WebHost
+WEBOBSERVER_WEBHOST_URL = Url WebHost cible
+WEBOBSERVER_WEBHOST_URLTooltip = L'adresse URL de la page à appeler pour informer le serveur WebHost
 
 #
 # About page
