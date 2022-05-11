@@ -161,7 +161,7 @@ class WebObserver {
 
 										$modNameLoaded[$modName] = new stdClass();
 										$modNameLoaded[$modName]->dir = $dir;
-										$modNameLoaded[$modName]->name = $objMod->name;
+										$modNameLoaded[$modName]->name = $objMod->getName();
 										$modNameLoaded[$modName]->numero = $objMod->numero;
 										$modNameLoaded[$modName]->version = $objMod->version;
 										$modNameLoaded[$modName]->source = $objMod->isCoreOrExternalModule();
