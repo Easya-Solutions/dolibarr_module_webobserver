@@ -13,8 +13,7 @@ class WebObserver {
 
 		// Dolibarr main informations
 		$instance->dolibarr = new stdClass;
-		$instance->dolibarr->version = DOL_VERSION;
-		$instance->dolibarr->version1 = $conf->global->MAIN_VERSION_LAST_INSTALL;
+        $instance->dolibarr->version = !empty($conf->global->EASYA_VERSION) ? $conf->global->EASYA_VERSION : DOL_VERSION;
 		$instance->dolibarr->theme = $conf->theme;
 
 		$instance->dolibarr->path=new stdClass;
