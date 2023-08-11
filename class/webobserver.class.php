@@ -21,15 +21,15 @@ class WebObserver {
 
 		$instance->dolibarr->data = new stdClass;
 		$instance->dolibarr->data->path = DOL_DATA_ROOT;
-		$instance->dolibarr->data->size = self::getDirSize($instance->dolibarr->data->path, DOL_DATA_ROOT);
+		//$instance->dolibarr->data->size = self::getDirSize($instance->dolibarr->data->path, DOL_DATA_ROOT);
 
 		$instance->dolibarr->htdocs=new stdClass;
 		$instance->dolibarr->htdocs->path = DOL_DOCUMENT_ROOT;
-		$instance->dolibarr->htdocs->size = self::getDirSize($instance->dolibarr->htdocs->path, DOL_DATA_ROOT);
+		//$instance->dolibarr->htdocs->size = self::getDirSize($instance->dolibarr->htdocs->path, DOL_DATA_ROOT);
 
 		$instance->dolibarr->repertoire_client=new stdClass;
 		$instance->dolibarr->repertoire_client->path = dirname(dirname(DOL_DOCUMENT_ROOT));
-		$instance->dolibarr->repertoire_client->size = self::getDirSize($instance->dolibarr->repertoire_client->path, DOL_DATA_ROOT);
+		//$instance->dolibarr->repertoire_client->size = self::getDirSize($instance->dolibarr->repertoire_client->path, DOL_DATA_ROOT);
 
 		// Informations about Dolibarr database
 		$instance->db=new stdClass;
@@ -201,7 +201,7 @@ class WebObserver {
 		global $donedir;
 		if(isset($donedir[$dir])) return $donedir[$dir];
 
-		$cmd = 'cd ' . $dir . ' && git status';
+		$cmd = 'cd ' . $dir . ' && git rev-parse HEAD';
 		$status = shell_exec($cmd);
 		$cmd = 'cd ' . $dir . ' && git rev-parse --abbrev-ref HEAD';
 		$branch = shell_exec($cmd);
