@@ -25,7 +25,7 @@ $webObserver = new WebObserver();
 
 WebObserver::securityCheck($conf->global->WEBOBSERVER_TOKEN);
 
-print $webObserver::getInstanceJson();
+print @$webObserver::getInstanceJson();
 
 
 ob_flush();
